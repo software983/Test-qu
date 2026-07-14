@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "Com.maasrawy.quran",
+        "sha256_cert_fingerprints": ["0E:9F:7C:B1:5E:1C:7A:7D:A7:9E:41:87:F4:51:14:27:B9:54:BD:4E:BD:51:68:7D:1B:C0:54:DE:FE:40:5F:60"]
+      }
+    }]
