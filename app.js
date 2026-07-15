@@ -538,12 +538,12 @@ function renderSurahsList() {
         const actionsDir = currentLang === 'ar' ? 'row' : 'row-reverse';
         
         return `
-            <div class="surah-row" data-id="${s.id}">
-                <div class="surah-info" onclick="openReadingJuz(${s.id}, '${s.url}')" role="button" tabindex="0" style="cursor:pointer;">
-                    <span class="surah-number">${String(s.id).padStart(3, '0')}</span>
+            <div class="surah-row" data-id="${s.id}" onclick="openReadingJuz(${s.id}, '${s.url}')">
+                <div class="surah-info">
+                    <span class="surah-number">${String(s.id).padStart(2, '0')}</span>
                     <span class="surah-name">${displayName}</span>
                 </div>
-                <div class="surah-actions" style="flex-direction:${actionsDir}">
+                <div class="surah-actions" style="flex-direction:${actionsDir}" onclick="event.stopPropagation()">
                     <button class="surah-action-btn play-cell"
                             onclick="openReadingJuz(${s.id}, '${s.url}')"
                             aria-label="تشغيل ${displayName}">

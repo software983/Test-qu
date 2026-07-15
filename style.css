@@ -11,10 +11,10 @@
     --bg-subtle:    #ede9e2;
     --bg-inset:     #faf8f5;
 
-    --accent-gold:  #b8933e;
-    --accent-light: #d4aa5a;
-    --accent-glow:  rgba(184, 147, 62, 0.18);
-    --accent-hover: #a07d33;
+    --accent-gold:  #c29a4a; /* ذهبي أكثر إشراقاً وحداثة */
+    --accent-light: #e0bc75;
+    --accent-glow:  rgba(194, 154, 74, 0.15);
+    --accent-hover: #ad863b;
 
     --text-title:   #1a1510;
     --text-body:    #3d3426;
@@ -607,111 +607,162 @@ html[dir="ltr"] .dropdown-item.active {
     border-left: 3px solid var(--accent-gold); /* LTR Support */
 }
 
-/* ── قائمة السور ── */
+/* ── قائمة السور (تصميم حديث وأنيق) ── */
 .surah-list-container {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 4px 0;
+}
+
+@media (min-width: 768px) {
+    .surah-list-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 .surah-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 6px 14px;
+    padding: 12px 16px;
     background: var(--bg-card);
     border: 1px solid var(--border-soft);
-    border-radius: var(--radius-sm);
-    transition: border-color var(--transition), background var(--transition), box-shadow var(--transition);
-    cursor: default;
+    border-radius: var(--radius-md);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.surah-row::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--accent-gold);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+    transform-origin: right;
 }
 
 .surah-row:hover {
-    border-color: var(--border-mid);
-    box-shadow: var(--shadow-sm);
+    border-color: var(--accent-gold);
+    background: var(--bg-inset);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px var(--accent-glow);
+}
+
+.surah-row:hover::after {
+    transform: scaleX(1);
 }
 
 .surah-row.active-row {
     border-color: var(--accent-gold);
     background: var(--accent-glow);
-    box-shadow: 0 0 0 1px var(--accent-gold);
+    box-shadow: 0 4px 20px var(--accent-glow);
+}
+
+.surah-row.active-row::after {
+    transform: scaleX(1);
 }
 
 .surah-info {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
     flex: 1;
     min-width: 0;
 }
 
 .surah-number {
-    font-size: 0.72rem;
-    font-weight: 700;
+    width: 32px;
+    height: 32px;
+    background: var(--bg-subtle);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 800;
     color: var(--accent-gold);
-    min-width: 30px;
     flex-shrink: 0;
-    font-variant-numeric: tabular-nums;
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-soft);
+}
+
+.surah-row:hover .surah-number,
+.surah-row.active-row .surah-number {
+    background: var(--accent-gold);
+    color: #fff;
+    border-color: var(--accent-gold);
+    transform: rotate(360deg);
 }
 
 .surah-name {
-    font-size: 0.82rem;
+    font-size: 0.95rem;
     font-weight: 700;
     color: var(--text-title);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    transition: color 0.3s ease;
+}
+
+.surah-row:hover .surah-name {
+    color: var(--accent-gold);
 }
 
 .surah-actions {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     flex-shrink: 0;
 }
 
 .surah-action-btn {
-    width: 29px;
-    height: 29px;
-    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--bg-subtle);
-    border: 1px solid var(--border-soft);
+    background: var(--bg-card);
+    border: 1.5px solid var(--border-soft);
     color: var(--text-muted);
     cursor: pointer;
-    text-decoration: none;
-    transition: background var(--transition), color var(--transition), border-color var(--transition), transform var(--transition);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--shadow-sm);
 }
 
 .surah-action-btn:hover {
-    background: var(--accent-glow);
-    color: var(--accent-gold);
-    border-color: var(--accent-gold);
-    transform: scale(1.08);
-}
-
-.surah-action-btn:focus-visible {
-    outline: 2px solid var(--accent-gold);
-    outline-offset: 2px;
-}
-
-.surah-action-btn svg {
-    width: 14px !important;
-    height: 14px !important;
-}
-
-.active-row .play-cell {
     background: var(--accent-gold);
     color: #fff;
     border-color: var(--accent-gold);
+    transform: translateY(-2px) rotate(8deg);
     box-shadow: 0 4px 12px var(--accent-glow);
 }
 
-.active-row .play-cell:hover {
-    background: var(--accent-hover);
-    transform: scale(1.1);
+.surah-action-btn svg {
+    width: 16px !important;
+    height: 16px !important;
+}
+
+.play-cell {
+    background: var(--accent-gold) !important;
+    color: #fff !important;
+    border-color: var(--accent-gold) !important;
+}
+
+.play-cell:hover {
+    background: var(--accent-hover) !important;
+}
+
+.active-row .surah-action-btn {
+    border-color: var(--accent-gold);
 }
 
 /* ── أزرار أيقونات المشغل ── */
