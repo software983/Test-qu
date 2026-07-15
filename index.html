@@ -69,6 +69,17 @@
             <div class="top-bar-group">
                 <button class="top-btn" onclick="toggleTheme()" id="theme-toggle-btn" aria-label="تبديل المظهر"></button>
 
+                <div class="radio-wrapper" style="position: relative; display: flex; flex-direction: column; align-items: center;">
+                    <button class="top-btn radio-btn" onclick="toggleRadioAction()" id="radio-toggle-btn" aria-label="إذاعة الشيخ المعصراوي المباشرة" title="الإذاعة المباشرة">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="12" cy="12" r="2"></circle>
+                            <path d="M16.24 7.76a6 6 0 0 1 0 8.49M7.76 16.24a6 6 0 0 1 0-8.49M19.07 4.93a10 10 0 0 1 0 14.14M4.93 19.07a10 10 0 0 1 0-14.14"></path>
+                        </svg>
+                        <span class="radio-live-dot" id="radio-live-dot" aria-hidden="true"></span>
+                    </button>
+                    <div class="radio-flash-badge" id="radio-flash-badge">إذاعة الشيخ المعصراوي</div>
+                </div>
+
                 <a href="mailto:contact@egyquran.com" class="top-btn email-btn" aria-label="تواصل معنا عبر البريد الإلكتروني" title="تواصل معنا">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
@@ -128,10 +139,21 @@
 
     <!-- شاشة القراءة والمزامنة -->
     <div id="reading-view" class="reading-view" role="region" aria-label="عرض النص القرآني">
+        <div class="reading-top-bar">
+            <button class="reading-back-btn" id="reading-back-btn" onclick="closeReadingView()" aria-label="رجوع">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <div class="reading-titles">
+                <div class="reading-juz-title" id="reading-juz-title"></div>
+                <div class="reading-surah-title" id="reading-surah-title"></div>
+            </div>
+            <div class="reading-back-btn" aria-hidden="true" style="visibility:hidden"></div>
+        </div>
+
         <div class="ayat-scroll" id="ayat-scroll">
             <div class="reading-loading" id="reading-loading">
                 <svg class="loading-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg>
-                <span id="reading-loading-text">جاري تحميل صفحات المصحف...</span>
+                <span id="reading-loading-text">جاري تحميل النص...</span>
             </div>
             <div class="ayat-container" id="ayat-container"></div>
         </div>
@@ -152,6 +174,48 @@
                 <div id="dl-progress-fill" class="dl-progress-fill"></div>
             </div>
             <div id="dl-modal-pct" class="dl-modal-pct">0%</div>
+        </div>
+    </div>
+
+    <!-- لوحة الإذاعة المباشرة الوهمية -->
+    <div id="radio-modal" class="radio-modal" role="dialog" aria-modal="true" aria-labelledby="radio-modal-title" onclick="if(event.target===this) closeRadioPanel()">
+        <div class="radio-modal-content">
+            <button class="radio-close-btn" onclick="closeRadioPanel()" aria-label="إغلاق الإذاعة">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+
+            <div class="radio-live-badge">
+                <span class="radio-live-pulse" aria-hidden="true"></span>
+                <span id="radio-live-label">مباشر</span>
+            </div>
+
+            <div class="radio-avatar-wrapper">
+                <img src="maasrawi.jpg" alt="الشيخ أحمد عيسى المعصراوي" class="radio-avatar-img" loading="lazy">
+                <div class="radio-eq" id="radio-eq" aria-hidden="true">
+                    <div class="radio-eq-bar"></div>
+                    <div class="radio-eq-bar"></div>
+                    <div class="radio-eq-bar"></div>
+                    <div class="radio-eq-bar"></div>
+                    <div class="radio-eq-bar"></div>
+                </div>
+            </div>
+
+            <div id="radio-modal-title" class="radio-modal-title">إذاعة الشيخ المعصراوي</div>
+            <div id="radio-track-title" class="radio-track-title">جاري تجهيز البث المباشر...</div>
+
+            <button class="radio-play-btn" id="radio-play-btn" onclick="toggleRadioPlayback()" aria-label="تشغيل الإذاعة">
+                <svg id="radio-play-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+
+            <div class="radio-flash-notice" role="status">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"></path>
+                </svg>
+                <span>أنت تستمع الآن إلى البث المباشر لإذاعة الشيخ أحمد عيسى المعصراوي، على مدار الساعة</span>
+            </div>
         </div>
     </div>
 

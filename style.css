@@ -355,6 +355,30 @@ body {
     height: 17px;
 }
 
+/* ── إشعار الإذاعة الفليشر ── */
+.radio-flash-badge {
+    position: absolute;
+    top: 100%;
+    margin-top: 6px;
+    background: var(--accent-gold);
+    color: #fff;
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px var(--accent-glow);
+    animation: flash-pulse 1.5s infinite ease-in-out;
+    pointer-events: none;
+    z-index: 10;
+}
+
+@keyframes flash-pulse {
+    0% { opacity: 0.7; transform: scale(0.95); }
+    50% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0.7; transform: scale(0.95); }
+}
+
 .lang-btn {
     font-size: 0.75rem;
     letter-spacing: 0.04em;
@@ -818,6 +842,19 @@ html[dir="ltr"] .dropdown-item.active {
     transition: box-shadow var(--transition);
 }
 
+/* تحسينات للمشغل عند تشغيل الإذاعة */
+.floating-player.radio-mode .player-seekbar-container,
+.floating-player.radio-mode .player-time,
+.floating-player.radio-mode .player-main-controls .nav-btn,
+.floating-player.radio-mode .player-side-btn {
+    display: none !important;
+}
+
+.floating-player.radio-mode .player-main-controls {
+    justify-content: center;
+    width: 100%;
+}
+
 /* شريط التقدم */
 .player-seekbar-container {
     width: 100%;
@@ -1168,16 +1205,74 @@ body.focus-mode-active .top-bar {
     transform: translateY(0);
 }
 
-/* شاشة القراءة الآن تعرض صفحة المصحف فقط، بلا أي شريط علوي أو عناوين */
+.reading-top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border-soft);
+    background: var(--bg-card);
+    flex: 0 0 auto;
+}
 
-.ayat-scroll {
-    flex: 1 1 auto;
-    min-height: 0;
+.reading-back-btn {
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: var(--radius-full);
+    border: none;
+    background: var(--bg-subtle);
+    color: var(--accent-gold);
+    cursor: pointer;
+    transition: background var(--transition);
+}
+
+.reading-back-btn svg {
+    width: 20px;
+    height: 20px;
+    /* في الاتجاه RTL نعكس السهم ليشير لليمين */
+    transform: scaleX(-1);
+}
+
+.reading-back-btn:hover {
+    background: var(--bg-inset);
+}
+
+.reading-titles {
+    flex: 1 1 auto;
+    text-align: center;
     overflow: hidden;
-    padding: 16px 12px 150px;
+}
+
+.reading-juz-title {
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--text-title);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.reading-surah-title {
+    font-size: 0.78rem;
+    color: var(--accent-gold);
+    font-weight: 600;
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ayat-scroll {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    padding: 20px 16px 180px;
 }
 
 .reading-loading {
@@ -1195,98 +1290,350 @@ body.focus-mode-active .top-bar {
 }
 
 .ayat-container {
-    width: 100%;
-    height: 100%;
-    max-width: 560px;
+    max-width: 640px;
     margin: 0 auto;
+}
+
+.surah-divider {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 10px;
+    margin: 28px 0 20px;
+    color: var(--accent-gold);
+    font-family: 'Amiri', serif;
+    font-weight: 700;
+    font-size: 1.15rem;
 }
 
-/* ── عرض صفحة واحدة من المصحف بالكامل أمام المستخدم، مع طبقة شفافة للتظليل فوقها ──
-   تُعرض صفحة واحدة فقط في كل مرة (active-page)، وتنتقل الصفحة تلقائياً عند انتهاء آخر آية فيها */
-
-.quran-page-wrap {
-    display: none;
-    position: relative;
-    line-height: 0;
-    margin: 0 auto;
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    background: var(--bg-card);
-    box-shadow: var(--shadow-sm);
-    max-width: 100%;
-    max-height: 100%;
+.surah-divider:first-child {
+    margin-top: 4px;
 }
 
-.quran-page-wrap.active-page {
-    display: inline-block;
+.surah-divider::before,
+.surah-divider::after {
+    content: '';
+    flex: 1 1 auto;
+    height: 1px;
+    background: var(--border-mid);
 }
 
-.quran-page-img {
-    display: block;
-    width: auto;
-    height: auto;
-    max-width: 100%;
-    max-height: calc(100vh - 200px);
-    -webkit-user-drag: none;
-    user-select: none;
-    margin: 0 auto;
-}
-
-.ayah-overlay {
-    position: absolute;
-    inset: 0;
-}
-
-.ayah-box {
-    position: absolute;
-    cursor: pointer;
-    border-radius: 4px;
+.ayah-block {
+    font-family: 'Amiri', serif;
+    font-size: 1.45rem;
+    line-height: 2.4;
+    color: var(--text-body);
+    text-align: justify;
     background: transparent;
-    box-shadow: none;
-    border: none;
-    outline: none;
-    transition: background 0.35s ease;
 }
 
-.ayah-box:hover {
-    background: rgba(184, 147, 62, 0.12);
+.ayah-span {
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 2px 3px;
+    transition: background 0.35s ease, color 0.35s ease;
 }
 
-.ayah-box.active-ayah {
+.ayah-span:hover {
+    background: var(--bg-subtle);
+}
+
+.ayah-span.active-ayah {
     background: var(--accent-glow);
-    box-shadow: none;
-    border: none;
-    outline: none;
+    color: var(--accent-hover);
+    box-shadow: 0 0 0 1px var(--border-mid) inset;
 }
 
-.page-number-label {
-    text-align: center;
+.ayah-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     font-family: var(--font-ui);
     font-size: 0.72rem;
     font-weight: 700;
+    color: var(--accent-gold);
+    width: 24px;
+    height: 24px;
+    border: 1.5px solid var(--accent-gold);
+    border-radius: 50%;
+    margin: 0 4px;
+    vertical-align: middle;
+}
+
+body.dark-theme .ayah-span.active-ayah {
+    color: var(--accent-light);
+}
+
+@media (min-width: 640px) {
+    .ayah-block {
+        font-size: 1.6rem;
+    }
+}
+
+/* ================================================
+   الإذاعة المباشرة الوهمية (Pseudo Live Radio)
+   ================================================ */
+
+/* زر الإذاعة في الشريط العلوي */
+.radio-btn {
+    position: relative;
+}
+
+.radio-live-dot {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #e0483f;
+    box-shadow: 0 0 0 2px var(--bg-card);
+    opacity: 0;
+    transform: scale(0.6);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.radio-btn.on-air .radio-live-dot {
+    opacity: 1;
+    transform: scale(1);
+    animation: radio-dot-pulse 1.4s infinite;
+}
+
+.radio-btn.on-air {
+    color: var(--accent-gold);
+    border-color: var(--border-mid);
+}
+
+@keyframes radio-dot-pulse {
+    0%, 100% { box-shadow: 0 0 0 2px var(--bg-card), 0 0 0 2px rgba(224, 72, 63, 0.0); }
+    50%      { box-shadow: 0 0 0 2px var(--bg-card), 0 0 0 5px rgba(224, 72, 63, 0.35); }
+}
+
+/* لوحة الإذاعة (Overlay) */
+.radio-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 10001;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.radio-modal.show {
+    display: flex;
+}
+
+.radio-modal-content {
+    position: relative;
+    background: var(--bg-card);
+    border: 1.5px solid var(--accent-gold);
+    border-radius: var(--radius-lg);
+    padding: 32px 24px 26px;
+    width: 100%;
+    max-width: 360px;
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+    animation: slide-up-fade 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.radio-close-btn {
+    position: absolute;
+    top: 14px;
+    inset-inline-end: 14px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--bg-subtle);
+    border: none;
     color: var(--text-muted);
-    padding: 6px 0 0;
-    line-height: 1.4;
-}
-
-.quran-page-wrap.unavailable {
-    box-shadow: none;
-    background: transparent;
-}
-
-.page-missing {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 160px;
-    padding: 20px;
-    text-align: center;
+    cursor: pointer;
+    transition: background var(--transition), color var(--transition);
+}
+
+.radio-close-btn:hover {
+    background: var(--accent-glow);
+    color: var(--accent-gold);
+}
+
+.radio-close-btn svg {
+    width: 15px;
+    height: 15px;
+}
+
+/* شارة "مباشر" */
+.radio-live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(224, 72, 63, 0.12);
+    color: #e0483f;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    padding: 5px 12px;
+    border-radius: var(--radius-full);
+    margin-bottom: 18px;
+}
+
+.radio-live-pulse {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #e0483f;
+    animation: radio-dot-pulse 1.4s infinite;
+}
+
+/* صورة الشيخ داخل اللوحة */
+.radio-avatar-wrapper {
+    position: relative;
+    width: 92px;
+    height: 92px;
+    margin: 0 auto 16px;
+}
+
+.radio-avatar-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2.5px solid var(--accent-gold);
+    box-shadow: var(--shadow-md), 0 0 0 6px var(--accent-glow);
+    display: block;
+}
+
+.radio-eq {
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 3px;
+    height: 16px;
+    padding: 3px 7px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-mid);
+    border-radius: var(--radius-full);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.radio-eq.playing {
+    opacity: 1;
+    visibility: visible;
+}
+
+.radio-eq-bar {
+    width: 2.5px;
+    height: 100%;
+    background: linear-gradient(to top, var(--accent-gold), var(--accent-light));
+    border-radius: 2px;
+    transform-origin: bottom;
+}
+
+.radio-eq.playing .radio-eq-bar:nth-child(1) { animation: equalize 0.70s infinite alternate ease-in-out; }
+.radio-eq.playing .radio-eq-bar:nth-child(2) { animation: equalize 0.50s infinite alternate ease-in-out 0.20s; }
+.radio-eq.playing .radio-eq-bar:nth-child(3) { animation: equalize 0.80s infinite alternate ease-in-out 0.10s; }
+.radio-eq.playing .radio-eq-bar:nth-child(4) { animation: equalize 0.60s infinite alternate ease-in-out 0.30s; }
+.radio-eq.playing .radio-eq-bar:nth-child(5) { animation: equalize 0.70s infinite alternate ease-in-out 0.15s; }
+
+.radio-modal-title {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--text-title);
+    margin-bottom: 4px;
+}
+
+.radio-track-title {
+    font-size: 0.82rem;
     color: var(--text-muted);
-    font-weight: 600;
-    font-size: 0.85rem;
-    background: var(--bg-subtle);
+    margin-bottom: 20px;
+    min-height: 1.2em;
+}
+
+/* زر التشغيل الكبير */
+.radio-play-btn {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--accent-gold);
+    color: #fff;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin: 0 auto 22px;
+    box-shadow: 0 6px 22px var(--accent-glow);
+    transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+
+.radio-play-btn:hover {
+    background: var(--accent-hover);
+    box-shadow: 0 8px 26px var(--accent-glow);
+}
+
+.radio-play-btn:active { transform: scale(0.93); }
+
+.radio-play-btn svg {
+    width: 26px;
+    height: 26px;
+}
+
+.radio-play-btn.loading svg {
+    animation: spin 0.9s linear infinite;
+}
+
+/* إشعار الفلاش أسفل اللوحة */
+.radio-flash-notice {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-align: start;
+    background: linear-gradient(135deg, var(--accent-glow), transparent);
+    border: 1px solid var(--border-mid);
     border-radius: var(--radius-md);
+    padding: 12px 14px;
+    color: var(--text-body);
+    font-size: 0.76rem;
+    line-height: 1.55;
+    position: relative;
+    overflow: hidden;
+    animation: radio-flash-glow 2.2s infinite;
+}
+
+.radio-flash-notice svg {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    color: var(--accent-gold);
+    animation: radio-bolt-flash 1.6s infinite;
+}
+
+@keyframes radio-flash-glow {
+    0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); border-color: var(--border-mid); }
+    50%      { box-shadow: 0 0 14px 1px var(--accent-glow); border-color: var(--accent-gold); }
+}
+
+@keyframes radio-bolt-flash {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.35; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .radio-flash-notice,
+    .radio-flash-notice svg,
+    .radio-btn.on-air .radio-live-dot,
+    .radio-live-pulse {
+        animation: none !important;
+    }
 }
