@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>مصحف الأمة - الشيخ أحمد عيسى المعصراوي</title>
+    <meta name="description" content="استمع إلى القرآن الكريم بالروايات المتواترة بصوت الشيخ أحمد عيسى المعصراوي.">
+    <meta name="keywords" content="قرآن كريم, الشيخ المعصراوي, أحمد عيسى المعصراوي, القراءات العشر, روايات القرآن, mp3 قرآن, مصحف الأمة">
+    <meta http-equiv="content-language" content="ar">
+
+    <meta name="theme-color" content="#b8933e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="مصحف الأمة">
+    
+    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="manifest" href="manifest.json"> <!-- تم التأكد من وجود سطر المانيفست -->
+
+    <!-- الخطوط -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- ملف التنسيق -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- رسالة تثبيت التطبيق الانزلاقية -->
+    <div id="install-banner" class="install-banner" role="banner" aria-label="تثبيت التطبيق">
+        <img src="icon.png" alt="أيقونة مصحف الأمة" class="install-icon" loading="lazy">
+        <div class="install-info">
+            <div class="install-title" id="install-title">تثبيت تطبيق مصحف الأمة</div>
+            <div class="install-desc" id="install-desc">تجربة استماع أسرع وتعمل بدون إنترنت</div>
+        </div>
+        <button class="install-action-btn" id="install-action-btn" aria-label="تثبيت التطبيق">تثبيت</button>
+        <button class="install-close-btn" onclick="closeInstallBanner()" aria-label="إغلاق">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+    </div>
+
+    <!-- رسالة استئناف الاستماع -->
+    <div id="resume-banner" role="dialog" aria-modal="true" aria-labelledby="resume-text">
+        <div class="resume-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0z"/>
+                <path d="M10 8l6 4-6 4V8z"/>
+            </svg>
+        </div>
+        <div class="resume-text" id="resume-text">هل تود إكمال الاستماع؟</div>
+        <div class="resume-actions">
+            <button class="resume-btn" id="resume-btn-yes" onclick="resumePlayback()">متابعة الاستماع</button>
+            <button class="resume-close" id="resume-btn-no" onclick="closeResumeBanner()">إلغاء</button>
+        </div>
+    </div>
+
+    <!-- رسالة التوست (الإشعارات المؤقتة) -->
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <!-- محتوى الصفحة الرئيسي -->
+    <div class="container" id="main-container">
+
+        <!-- الشريط العلوي -->
+        <nav class="top-bar" aria-label="أدوات التحكم العامة">
+            <div class="top-bar-group">
+                <button class="top-btn" onclick="toggleTheme()" id="theme-toggle-btn" aria-label="تبديل المظهر"></button>
+
+                <a href="mailto:contact@egyquran.com" class="top-btn email-btn" aria-label="تواصل معنا عبر البريد الإلكتروني" title="تواصل معنا">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                </a>
+            </div>
+
+            <button class="top-btn lang-btn" onclick="toggleLanguage()" aria-label="تغيير اللغة">
+                <span id="lang-label">EN</span>
+            </button>
+        </nav>
+
+        <!-- رأس الصفحة - معلومات الشيخ -->
+        <header>
+            <div class="header-avatar-wrapper">
+                <img src="maasrawi.jpg" id="header-avatar-img" class="header-img" alt="الشيخ أحمد عيسى المعصراوي" loading="lazy">
+                <div class="header-avatar-glow" aria-hidden="true"></div>
+            </div>
+            <h1 id="main-title">الشيخ <strong>أحمد عيسى المعصراوي</strong></h1>
+            <p id="header-subtitle" class="header-subtitle">القراءات القرآنية المتواترة</p>
+
+            <!-- المعادل الصوتي -->
+            <div id="header-equalizer" class="header-equalizer" aria-hidden="true">
+                <div class="header-eq-bar"></div>
+                <div class="header-eq-bar"></div>
+                <div class="header-eq-bar"></div>
+                <div class="header-eq-bar"></div>
+                <div class="header-eq-bar"></div>
+            </div>
+        </header>
+
+        <!-- القائمة المنسدلة لاختيار الرواية -->
+        <section aria-label="اختيار الرواية">
+            <div class="custom-dropdown" id="edition-dropdown">
+                <div class="dropdown-header" onclick="toggleDropdown()" role="button" aria-haspopup="listbox" aria-expanded="false">
+                    <div class="dropdown-header-text">
+                        <span style="font-size: 0.7rem; color: var(--text-muted); display: block; margin-bottom: 2px;" id="dropdown-label">الرواية الحالية:</span>
+                        <strong id="selected-edition-name">حفص عن عاصم الكوفي</strong>
+                    </div>
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 10l5 5 5-5z"/></svg>
+                </div>
+                <div class="dropdown-list" id="edition-list" role="listbox">
+                    <!-- سيتم حقن الروايات العشرين هنا بواسطة الجافاسكربت -->
+                </div>
+            </div>
+        </section>
+
+        <!-- قائمة السور -->
+        <main role="main">
+            <div class="surah-list-container" id="main-surah-list" aria-label="قائمة السور">
+                <!-- سيتم حقن السور هنا بواسطة الجافاسكربت -->
+            </div>
+        </main>
+
+    </div>
+
+    <!-- شاشة القراءة والمزامنة -->
+    <div id="reading-view" class="reading-view" role="region" aria-label="عرض النص القرآني">
+        <div class="ayat-scroll" id="ayat-scroll">
+            <div class="reading-loading" id="reading-loading">
+                <svg class="loading-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg>
+                <span id="reading-loading-text">جاري تحميل صفحات المصحف...</span>
+            </div>
+            <div class="ayat-container" id="ayat-container"></div>
+        </div>
+    </div>
+
+    <!-- نافذة التحميل -->
+    <div id="download-modal" class="download-modal" role="dialog" aria-modal="true" aria-labelledby="dl-modal-title">
+        <div class="download-modal-content">
+            <div class="dl-modal-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+            </div>
+            <div id="dl-modal-title" class="dl-modal-title">جاري التحميل...</div>
+            <div class="dl-progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <div id="dl-progress-fill" class="dl-progress-fill"></div>
+            </div>
+            <div id="dl-modal-pct" class="dl-modal-pct">0%</div>
+        </div>
+    </div>
+
+    <!-- المشغل السفلي العائم -->
+    <div class="floating-player" id="global-player" role="region" aria-label="مشغل الصوت">
+        <!-- شريط التقدم -->
+        <div class="player-seekbar-container" id="progress-container" role="slider" aria-label="موضع التشغيل" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+            <div class="player-seekbar-track">
+                <div class="player-seekbar-fill" id="progress-bar-fill">
+                    <div class="player-seekbar-thumb" id="progress-thumb"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- معلومات التشغيل والوقت -->
+        <div class="player-info-row">
+            <div id="player-track-title" class="player-track-title"></div>
+            <div class="player-time">
+                <span id="curr-time" dir="ltr">00:00</span>
+                <span id="time-separator" class="time-sep">/</span>
+                <span id="total-time" dir="ltr">00:00</span>
+            </div>
+        </div>
+
+        <!-- أزرار التحكم -->
+        <div class="player-controls-row">
+            
+            <!-- عنصر موازن لتوسيط الأزرار -->
+            <div class="player-side-btn"></div>
+
+            <!-- أزرار التنقل والتشغيل -->
+            <div class="player-main-controls">
+                <button class="icon-btn nav-btn" onclick="playPrevious()" aria-label="السورة السابقة">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+                </button>
+                <button class="play-toggle-btn" id="player-play-btn" onclick="togglePlayPause()" aria-label="تشغيل أو إيقاف مؤقت"></button>
+                <button class="icon-btn nav-btn" onclick="playNext()" aria-label="السورة التالية">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+                </button>
+            </div>
+
+            <!-- زر وضع التشغيل (تلقائي/تكرار/إيقاف) -->
+            <div class="player-side-btn player-side-btn--end" id="playback-wrapper">
+                <button class="icon-btn playback-mode-btn active-feature" id="btn-playback-mode" onclick="togglePlaybackMenu(event)" aria-label="وضع التشغيل" aria-haspopup="true" aria-expanded="false">
+                    <span id="playback-text">تلقائي</span>
+                    <svg id="playback-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+                </button>
+                <div class="playback-menu" id="playback-menu" role="menu" aria-label="خيارات التشغيل"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ملف الجافاسكربت -->
+    <script src="app.js" defer></script>
+</body>
+</html>

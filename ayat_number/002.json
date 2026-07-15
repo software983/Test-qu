@@ -1,0 +1,101 @@
+[
+    {
+        "page_number": 2,
+        "line_number": 1,
+        "surah_number": 2,
+        "ayah_number": 1,
+        "position": 1,
+        "min_x": 474,
+        "max_x": 560,
+        "min_y": 159,
+        "max_y": 202
+    },
+    {
+        "page_number": 2,
+        "line_number": 1,
+        "surah_number": 2,
+        "ayah_number": 2,
+        "position": 1,
+        "min_x": 169,
+        "max_x": 474,
+        "min_y": 159,
+        "max_y": 202
+    },
+    {
+        "page_number": 2,
+        "line_number": 2,
+        "surah_number": 2,
+        "ayah_number": 2,
+        "position": 2,
+        "min_x": 459,
+        "max_x": 573,
+        "min_y": 220,
+        "max_y": 268
+    },
+    {
+        "page_number": 2,
+        "line_number": 2,
+        "surah_number": 2,
+        "ayah_number": 3,
+        "position": 1,
+        "min_x": 154,
+        "max_x": 459,
+        "min_y": 220,
+        "max_y": 268
+    },
+    {
+        "page_number": 2,
+        "line_number": 3,
+        "surah_number": 2,
+        "ayah_number": 3,
+        "position": 2,
+        "min_x": 352,
+        "max_x": 579,
+        "min_y": 284,
+        "max_y": 339
+    },
+    {
+        "page_number": 2,
+        "line_number": 3,
+        "surah_number": 2,
+        "ayah_number": 4,
+        "position": 1,
+        "min_x": 150,
+        "max_x": 352,
+        "min_y": 284,
+        "max_y": 339
+    },
+    {
+        "page_number": 2,
+        "line_number": 4,
+        "surah_number": 2,
+        "ayah_number": 4,
+        "position": 2,
+        "min_x": 148,
+        "max_x": 578,
+        "min_y": 349,
+        "max_y": 398
+    },
+    {
+        "page_number": 2,
+        "line_number": 5,
+        "surah_number": 2,
+        "ayah_number": 5,
+        "position": 1,
+        "min_x": 202,
+        "max_x": 526,
+        "min_y": 411,
+        "max_y": 470
+    },
+    {
+        "page_number": 2,
+        "line_number": 6,
+        "surah_number": 2,
+        "ayah_number": 5,
+        "position": 2,
+        "min_x": 258,
+        "max_x": 463,
+        "min_y": 486,
+        "max_y": 533
+    }
+]
