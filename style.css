@@ -6,28 +6,33 @@
 /* ── متغيرات الألوان والتوكنز ── */
 :root {
     /* الوضع الفاتح */
-    --bg-page:      #f5f3ef;
+    --bg-page:      #f7f3ea;
     --bg-card:      #ffffff;
-    --bg-subtle:    #ede9e2;
-    --bg-inset:     #faf8f5;
+    --bg-subtle:    #eee7d8;
+    --bg-inset:     #fbf8f1;
 
-    --accent-gold:  #b8933e;
-    --accent-light: #d4aa5a;
-    --accent-glow:  rgba(184, 147, 62, 0.18);
-    --accent-hover: #a07d33;
+    --accent-gold:  #ad7f2e;
+    --accent-light: #cc9a4a;
+    --accent-glow:  rgba(173, 127, 46, 0.16);
+    --accent-hover: #8f6a26;
 
-    --text-title:   #1a1510;
+    /* حبر ليلي — لون ثانوي للعمق والتباين */
+    --ink:          #1e2d3b;
+    --ink-light:    #33495d;
+    --ink-glow:     rgba(30, 45, 59, 0.08);
+
+    --text-title:   #1c1712;
     --text-body:    #3d3426;
     --text-muted:   #8a7d6b;
     --text-faint:   #b5a898;
 
-    --border-soft:  rgba(140, 110, 60, 0.12);
-    --border-mid:   rgba(140, 110, 60, 0.22);
+    --border-soft:  rgba(120, 95, 55, 0.13);
+    --border-mid:   rgba(120, 95, 55, 0.24);
 
-    --player-bg:    rgba(255, 252, 245, 0.97);
-    --shadow-sm:    0 2px 8px rgba(100, 70, 20, 0.07);
-    --shadow-md:    0 6px 24px rgba(100, 70, 20, 0.11);
-    --shadow-lg:    0 12px 40px rgba(100, 70, 20, 0.15);
+    --player-bg:    rgba(255, 252, 246, 0.97);
+    --shadow-sm:    0 2px 8px rgba(80, 55, 15, 0.08);
+    --shadow-md:    0 8px 28px rgba(80, 55, 15, 0.12);
+    --shadow-lg:    0 16px 48px rgba(60, 42, 12, 0.16);
 
     --radius-sm:    10px;
     --radius-md:    16px;
@@ -36,32 +41,37 @@
 
     --transition:   0.22s cubic-bezier(0.4, 0, 0.2, 1);
     --font-ui:      'Cairo', sans-serif;
+    --font-quran:   'Amiri', serif;
 }
 
 /* الوضع الداكن */
 body.dark-theme {
-    --bg-page:      #0f0e0c;
-    --bg-card:      #1a1812;
-    --bg-subtle:    #231f18;
-    --bg-inset:     #141210;
+    --bg-page:      #0d0f12;
+    --bg-card:      #191712;
+    --bg-subtle:    #221f18;
+    --bg-inset:     #131211;
 
-    --accent-gold:  #c5a459;
-    --accent-light: #d9b96a;
-    --accent-glow:  rgba(197, 164, 89, 0.15);
-    --accent-hover: #b39048;
+    --accent-gold:  #c9a35d;
+    --accent-light: #ddbd7c;
+    --accent-glow:  rgba(201, 163, 93, 0.16);
+    --accent-hover: #b78f4a;
 
-    --text-title:   #f5efdf;
+    --ink:          #cdd8e2;
+    --ink-light:    #9fb3c4;
+    --ink-glow:     rgba(150, 180, 205, 0.09);
+
+    --text-title:   #f6efe0;
     --text-body:    #cdc0a8;
-    --text-muted:   #7a6e5e;
+    --text-muted:   #7c7060;
     --text-faint:   #4a4035;
 
-    --border-soft:  rgba(197, 164, 89, 0.10);
-    --border-mid:   rgba(197, 164, 89, 0.18);
+    --border-soft:  rgba(201, 163, 93, 0.11);
+    --border-mid:   rgba(201, 163, 93, 0.20);
 
-    --player-bg:    rgba(18, 16, 12, 0.97);
-    --shadow-sm:    0 2px 8px rgba(0, 0, 0, 0.3);
-    --shadow-md:    0 6px 24px rgba(0, 0, 0, 0.4);
-    --shadow-lg:    0 12px 40px rgba(0, 0, 0, 0.5);
+    --player-bg:    rgba(16, 15, 12, 0.97);
+    --shadow-sm:    0 2px 8px rgba(0, 0, 0, 0.32);
+    --shadow-md:    0 8px 28px rgba(0, 0, 0, 0.42);
+    --shadow-lg:    0 16px 48px rgba(0, 0, 0, 0.55);
 }
 
 /* ── إعادة الضبط الأساسية ── */
@@ -407,8 +417,11 @@ header {
     width: 96px;
     height: 96px;
     border-radius: 50%;
-    border: 2.5px solid var(--accent-gold);
-    box-shadow: var(--shadow-md), 0 0 0 6px var(--accent-glow);
+    border: 3px solid var(--bg-card);
+    box-shadow:
+        0 0 0 2px var(--accent-gold),
+        0 0 0 5px var(--ink-glow),
+        var(--shadow-md);
     object-fit: cover;
     display: block;
     transition: box-shadow var(--transition);
@@ -426,28 +439,43 @@ header {
 
 .header-equalizer.playing ~ .header-img,
 header:has(.header-equalizer.playing) .header-img {
-    box-shadow: var(--shadow-md), 0 0 0 8px var(--accent-glow);
+    box-shadow:
+        0 0 0 2px var(--accent-gold),
+        0 0 0 8px var(--accent-glow),
+        var(--shadow-md);
 }
 
 header h1 {
-    font-family: var(--font-ui);
-    font-size: 1.15rem;
+    font-family: var(--font-quran);
+    font-size: 1.3rem;
     font-weight: 400;
     color: var(--text-body);
-    margin-bottom: 4px;
+    margin-bottom: 6px;
     letter-spacing: 0.01em;
     transition: font-size var(--transition);
 }
 
 header h1 strong {
-    font-weight: 800;
+    font-weight: 700;
     color: var(--accent-gold);
 }
 
 .header-subtitle {
-    font-size: 0.8rem;
+    font-size: 0.72rem;
     color: var(--text-muted);
-    letter-spacing: 0.03em;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.header-subtitle::before,
+.header-subtitle::after {
+    content: '';
+    width: 14px;
+    height: 1px;
+    background: var(--border-mid);
 }
 
 /* المعادل الصوتي في الرأس */
@@ -498,7 +526,7 @@ header h1 strong {
 .dropdown-header {
     background: var(--bg-card);
     border: 1.5px solid var(--border-mid);
-    padding: 12px 16px;
+    padding: 13px 16px;
     border-radius: var(--radius-md);
     display: flex;
     justify-content: space-between;
@@ -506,6 +534,19 @@ header h1 strong {
     cursor: pointer;
     box-shadow: var(--shadow-sm);
     transition: all var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.dropdown-header::before {
+    content: '';
+    position: absolute;
+    inset-inline-start: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--accent-gold), var(--ink));
+    opacity: 0.85;
 }
 
 .dropdown-header:hover {
@@ -522,8 +563,9 @@ html[dir="ltr"] .dropdown-header-text {
 }
 
 .dropdown-header-text strong {
-    font-size: 0.9rem;
+    font-size: 0.92rem;
     color: var(--accent-gold);
+    font-weight: 700;
 }
 
 .dropdown-header svg {
@@ -599,12 +641,14 @@ html[dir="ltr"] .dropdown-header-text {
 .dropdown-item.active {
     background: var(--accent-glow);
     color: var(--accent-gold);
-    border-right: 3px solid var(--accent-gold); /* RTL Support */
+    font-weight: 800;
 }
 
-html[dir="ltr"] .dropdown-item.active {
-    border-right: none;
-    border-left: 3px solid var(--accent-gold); /* LTR Support */
+.dropdown-item.active::after {
+    content: '✓';
+    font-weight: 800;
+    color: var(--accent-gold);
+    margin-inline-start: 8px;
 }
 
 /* ── قائمة السور ── */
@@ -618,12 +662,26 @@ html[dir="ltr"] .dropdown-item.active {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 6px 14px;
+    padding: 8px 14px;
     background: var(--bg-card);
     border: 1px solid var(--border-soft);
     border-radius: var(--radius-sm);
     transition: border-color var(--transition), background var(--transition), box-shadow var(--transition);
     cursor: default;
+    position: relative;
+    overflow: hidden;
+}
+
+.surah-row::before {
+    content: '';
+    position: absolute;
+    inset-inline-start: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--accent-gold);
+    transform: scaleY(0);
+    transition: transform var(--transition);
 }
 
 .surah-row:hover {
@@ -634,7 +692,11 @@ html[dir="ltr"] .dropdown-item.active {
 .surah-row.active-row {
     border-color: var(--accent-gold);
     background: var(--accent-glow);
-    box-shadow: 0 0 0 1px var(--accent-gold);
+    box-shadow: var(--shadow-sm);
+}
+
+.surah-row.active-row::before {
+    transform: scaleY(1);
 }
 
 .surah-info {
@@ -646,16 +708,29 @@ html[dir="ltr"] .dropdown-item.active {
 }
 
 .surah-number {
-    font-size: 0.72rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
+    font-size: 0.68rem;
     font-weight: 700;
     color: var(--accent-gold);
-    min-width: 30px;
-    flex-shrink: 0;
+    border: 1.5px solid var(--border-mid);
+    border-radius: 50%;
     font-variant-numeric: tabular-nums;
 }
 
+.active-row .surah-number {
+    background: var(--accent-gold);
+    border-color: var(--accent-gold);
+    color: #fff;
+}
+
 .surah-name {
-    font-size: 0.82rem;
+    font-family: var(--font-quran);
+    font-size: 0.98rem;
     font-weight: 700;
     color: var(--text-title);
     white-space: nowrap;
@@ -840,6 +915,18 @@ html[dir="ltr"] .dropdown-item.active {
     display: none;
     z-index: 1000;
     transition: box-shadow var(--transition);
+    overflow: hidden;
+}
+
+.floating-player::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 12%;
+    right: 12%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+    opacity: 0.7;
 }
 
 /* تحسينات للمشغل عند تشغيل الإذاعة */
@@ -1130,7 +1217,10 @@ body.focus-mode-active {
     justify-content: center;
     height: 100dvh;
     overflow: hidden;
-    background: var(--bg-page);
+    background:
+        radial-gradient(ellipse at 50% 15%, var(--accent-glow) 0%, transparent 55%),
+        radial-gradient(ellipse at 50% 100%, var(--ink-glow) 0%, transparent 60%),
+        var(--bg-page);
 }
 
 body.focus-mode-active .container {
@@ -1191,7 +1281,7 @@ body.focus-mode-active .top-bar {
     position: fixed;
     inset: 0;
     z-index: 900;
-    background: var(--bg-page);
+    background: var(--bg-inset);
     display: none;
     flex-direction: column;
     transform: translateY(12px);
@@ -1298,7 +1388,7 @@ body.focus-mode-active .top-bar {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 14px;
     margin: 28px 0 20px;
     color: var(--accent-gold);
     font-family: 'Amiri', serif;
@@ -1315,13 +1405,17 @@ body.focus-mode-active .top-bar {
     content: '';
     flex: 1 1 auto;
     height: 1px;
-    background: var(--border-mid);
+    background: linear-gradient(90deg, transparent, var(--border-mid));
+}
+
+.surah-divider::after {
+    background: linear-gradient(90deg, var(--border-mid), transparent);
 }
 
 .ayah-block {
     font-family: 'Amiri', serif;
     font-size: 1.45rem;
-    line-height: 2.4;
+    line-height: 2.5;
     color: var(--text-body);
     text-align: justify;
     background: transparent;
@@ -1329,9 +1423,9 @@ body.focus-mode-active .top-bar {
 
 .ayah-span {
     cursor: pointer;
-    border-radius: 8px;
+    border-radius: 6px;
     padding: 2px 3px;
-    transition: background 0.35s ease, color 0.35s ease;
+    transition: background 0.35s ease, color 0.35s ease, box-shadow 0.35s ease;
 }
 
 .ayah-span:hover {
@@ -1341,7 +1435,7 @@ body.focus-mode-active .top-bar {
 .ayah-span.active-ayah {
     background: var(--accent-glow);
     color: var(--accent-hover);
-    box-shadow: 0 0 0 1px var(--border-mid) inset;
+    box-shadow: inset 0 -2px 0 0 var(--accent-gold);
 }
 
 .ayah-num {
@@ -1636,147 +1730,4 @@ body.dark-theme .ayah-span.active-ayah {
     .radio-live-pulse {
         animation: none !important;
     }
-}
-
-/* ── تنسيقات عرض صور المصحف والتظليل ── */
-
-.mushaf-wrapper {
-    position: relative;
-    display: inline-block;
-    width: 100%;
-    max-width: 100%;
-    margin: 0 auto;
-}
-
-.mushaf-image {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-md);
-    background: var(--bg-card);
-}
-
-.highlight-layer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-}
-
-.ayah-highlight-box {
-    position: absolute;
-    background-color: rgba(184, 147, 62, 0.25);
-    border: 2px solid rgba(184, 147, 62, 0.6);
-    border-radius: 4px;
-    box-shadow: 0 0 8px rgba(184, 147, 62, 0.3) inset;
-    pointer-events: none;
-    transition: all 0.3s ease;
-}
-
-.ayah-highlight-box:hover {
-    background-color: rgba(184, 147, 62, 0.35);
-    border-color: rgba(184, 147, 62, 0.8);
-    box-shadow: 0 0 12px rgba(184, 147, 62, 0.5) inset;
-}
-
-body.dark-theme .ayah-highlight-box {
-    background-color: rgba(197, 164, 89, 0.25);
-    border-color: rgba(197, 164, 89, 0.6);
-    box-shadow: 0 0 8px rgba(197, 164, 89, 0.3) inset;
-}
-
-body.dark-theme .ayah-highlight-box:hover {
-    background-color: rgba(197, 164, 89, 0.35);
-    border-color: rgba(197, 164, 89, 0.8);
-    box-shadow: 0 0 12px rgba(197, 164, 89, 0.5) inset;
-}
-
-/* تأثير التظليل النشط */
-.ayah-highlight-box.active {
-    background-color: rgba(184, 147, 62, 0.4);
-    border-color: rgba(184, 147, 62, 1);
-    box-shadow: 0 0 16px rgba(184, 147, 62, 0.6) inset, 0 0 20px rgba(184, 147, 62, 0.3);
-    animation: pulse-highlight 0.6s ease-in-out;
-}
-
-@keyframes pulse-highlight {
-    0% {
-        box-shadow: 0 0 16px rgba(184, 147, 62, 0.6) inset, 0 0 20px rgba(184, 147, 62, 0.3);
-    }
-    50% {
-        box-shadow: 0 0 24px rgba(184, 147, 62, 0.8) inset, 0 0 32px rgba(184, 147, 62, 0.5);
-    }
-    100% {
-        box-shadow: 0 0 16px rgba(184, 147, 62, 0.6) inset, 0 0 20px rgba(184, 147, 62, 0.3);
-    }
-}
-
-body.dark-theme .ayah-highlight-box.active {
-    background-color: rgba(197, 164, 89, 0.4);
-    border-color: rgba(197, 164, 89, 1);
-    box-shadow: 0 0 16px rgba(197, 164, 89, 0.6) inset, 0 0 20px rgba(197, 164, 89, 0.3);
-}
-
-/* ── تنسيقات عرض صور المصحف والتظليل ── */
-
-.mushaf-wrapper {
-    position: relative;
-    display: inline-block;
-    width: 100%;
-    max-width: 100%;
-    margin: 0 auto;
-}
-
-.mushaf-image {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-md);
-    background: var(--bg-card);
-}
-
-.highlight-layer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-}
-
-.ayah-highlight-box {
-    position: absolute;
-    background-color: rgba(184, 147, 62, 0.25);
-    border: 2px solid rgba(184, 147, 62, 0.6);
-    border-radius: 4px;
-    box-shadow: 0 0 8px rgba(184, 147, 62, 0.3) inset;
-    pointer-events: none;
-    transition: all 0.3s ease;
-}
-
-.ayah-highlight-box.active {
-    background-color: rgba(184, 147, 62, 0.4);
-    border-color: rgba(184, 147, 62, 1);
-    box-shadow: 0 0 16px rgba(184, 147, 62, 0.6) inset, 0 0 20px rgba(184, 147, 62, 0.3);
-    animation: pulse-highlight 0.6s ease-in-out;
-}
-
-@keyframes pulse-highlight {
-    0% { box-shadow: 0 0 16px rgba(184, 147, 62, 0.6) inset, 0 0 20px rgba(184, 147, 62, 0.3); }
-    50% { box-shadow: 0 0 24px rgba(184, 147, 62, 0.8) inset, 0 0 32px rgba(184, 147, 62, 0.5); }
-    100% { box-shadow: 0 0 16px rgba(184, 147, 62, 0.6) inset, 0 0 20px rgba(184, 147, 62, 0.3); }
-}
-
-body.dark-theme .ayah-highlight-box {
-    background-color: rgba(197, 164, 89, 0.25);
-    border-color: rgba(197, 164, 89, 0.6);
-}
-
-body.dark-theme .ayah-highlight-box.active {
-    background-color: rgba(197, 164, 89, 0.4);
-    border-color: rgba(197, 164, 89, 1);
 }
