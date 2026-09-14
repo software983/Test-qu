@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "name": "سورة الفاتحة",
+    "url": "https://archive.org/download/01_20260812/01.m4a",
+    "startTime": 0
+  },
+  {
+    "id": 2,
+    "name": "سورة البقرة",
+    "url": "https://archive.org/download/01_20260812/01.m4a",
+    "startTime": 53
+  }
+]
