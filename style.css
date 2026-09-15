@@ -145,7 +145,7 @@ body {
 .sheikh-header-text { flex: 1 1 auto; min-width: 0; text-align: right; }
 #main-title {
     margin: 0; font-size: 1rem; line-height: 1.3; color: var(--text-on-dark); font-weight: 800;
-    white-space: normal; /* تم التعديل هنا ليظهر الاسم كاملاً */
+    white-space: normal;
 }
 #main-title strong { color: var(--accent-light); }
 .header-subtitle {
@@ -158,7 +158,7 @@ body {
 }
 .header-avatar-ring {
     position: relative;
-    width: 80px; height: 80px; border-radius: 50%; /* تم التعديل هنا لتكبير الصورة */
+    width: 80px; height: 80px; border-radius: 50%;
     padding: 3px;
     background: conic-gradient(from 200deg, #f2dfa4, #c9a24a 30%, #8a6a25 55%, #c9a24a 78%, #f2dfa4);
     box-shadow: 0 4px 12px rgba(0,0,0,0.4), 0 0 0 3px var(--bg-page);
@@ -294,9 +294,10 @@ body:has(#page-mushaf.active-page) #page-mushaf {
 .empty-mushaf-msg { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 60vh; color: var(--text-on-dark-muted); text-align: center; gap: 12px; }
 .empty-mushaf-msg svg { width: 48px; height: 48px; opacity: 0.5; }
 
+/* التعديل الجذري لمنع التغير في حجم المصحف */
 .mushaf-page-view { display: none; width: 100%; margin: 0 auto; }
-.mushaf-page-view.show { display: flex; position: relative; justify-content: center; width: 100%; animation: fadePageIn 0.3s ease-out; }
-.mushaf-page-track { position: relative; overflow: hidden; background: var(--bg-card); border: 1px solid var(--border-gold); width: 100%; height: auto; touch-action: pan-y; }
+.mushaf-page-view.show { display: block; width: 100%; animation: fadePageIn 0.3s ease-out; }
+.mushaf-page-track { position: relative; width: 100%; height: auto !important; background: var(--bg-card); border: 1px solid var(--border-gold); overflow: hidden; touch-action: pan-y; }
 
 /* ── إطار معلومات الصفحة (سورة · جزء · رقم الصفحة)، بعرض صفحة المصحف فوقها مباشرة، بانحناء من الأعلى فقط ── */
 .mushaf-page-meta {
@@ -330,7 +331,7 @@ body:has(#page-mushaf.active-page) #page-mushaf {
 .mushaf-page-wrap.mushaf-dragging { transition: none; }
 .mushaf-page-wrap.mushaf-snap { transition: transform 0.32s cubic-bezier(.22, .61, .36, 1); }
 .mushaf-page-wrap.page-turning { opacity: 0; transition: opacity 0.16s ease; }
-.mushaf-page-wrap svg { width: 100%; height: auto; display: block; }
+.mushaf-page-wrap svg { width: 100% !important; height: auto !important; display: block; }
 .mushaf-page-wrap svg [fill] { fill: var(--text-title); }
 
 .mushaf-page-wrap svg .mushaf-ayah-hit { fill: transparent; fill-opacity: 0; cursor: pointer; transition: fill 0.3s ease, fill-opacity 0.3s ease; }
