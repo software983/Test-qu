@@ -825,12 +825,14 @@ function sizeMushafPageTrack() {
     const availW = view.clientWidth;
     const availH = view.clientHeight;
     if (!availW || !availH) return;
+    const WIDEN_FACTOR = 1.06; // عرض أكبر قليلاً من العرض المطابق تمامًا لنسبة الصفحة، بنفس الارتفاع
     let w = availW;
     let h = w * mushafPageRatio;
     if (h > availH) {
         h = availH;
         w = h / mushafPageRatio;
     }
+    w = Math.min(availW, w * WIDEN_FACTOR);
     track.style.width = Math.floor(w) + 'px';
     track.style.height = Math.floor(h) + 'px';
 }

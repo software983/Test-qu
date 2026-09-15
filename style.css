@@ -296,7 +296,7 @@ body:has(#page-mushaf.active-page) #page-mushaf {
 
 .mushaf-page-view { display: none; width: 100%; margin: 0 auto; }
 .mushaf-page-view.show { display: flex; position: relative; justify-content: center; flex: 1 1 auto; min-height: 0; animation: fadePageIn 0.3s ease-out; }
-.mushaf-page-track { position: relative; overflow: hidden; background: var(--bg-card); border: 1px solid var(--border-gold); aspect-ratio: 1 / 1.58; width: 100%; max-width: 480px; touch-action: pan-y; }
+.mushaf-page-track { position: relative; overflow: hidden; background: var(--bg-card); border: 1px solid var(--border-gold); aspect-ratio: 1 / 1.58; width: 100%; max-width: 480px; display: flex; align-items: center; justify-content: center; touch-action: pan-y; }
 
 /* ── إطار معلومات الصفحة (سورة · جزء · رقم الصفحة)، بعرض صفحة المصحف فوقها مباشرة، بانحناء من الأعلى فقط ── */
 .mushaf-page-meta {
