@@ -814,6 +814,35 @@ const ayatScrollEl = document.getElementById('ayat-scroll');
 if (ayatScrollEl) ayatScrollEl.addEventListener('scroll', closeAyahActionsMenu, { passive: true });
 window.addEventListener('resize', closeAyahActionsMenu);
 
+// ── ضبط أبعاد صفحة المصحف بدقة عبر JS بدل الاعتماد على aspect-ratio/max-height في CSS ──
+// (بعض المتصفحات وأدوات المعاينة تتعامل مع نسبة العرض إلى الارتفاع داخل flex بشكل مختلف،
+//  فنحسب الأبعاد الفعلية بالبكسل هنا لضمان ظهور الصفحة بنفس الشكل في كل مكان)
+function sizeMushafPageTrack() {
+    const view = document.getElementById('mushaf-page-view');
+    const track = document.getElementById('mushaf-page-track');
+    if (!view || !track) return;
+    const availW = view.clientWidth;
+    const availH = view.clientHeight;
+    if (!availW || !availH) return;
+    const PAGE_RATIO = 1.5; // نسبة ارتفاع صفحة المصحف إلى عرضها
+    let w = availW;
+    let h = w * PAGE_RATIO;
+    if (h > availH) {
+        h = availH;
+        w = h / PAGE_RATIO;
+    }
+    track.style.width = Math.floor(w) + 'px';
+    track.style.height = Math.floor(h) + 'px';
+}
+if (typeof ResizeObserver !== 'undefined') {
+    const mushafViewElForSizing = document.getElementById('mushaf-page-view');
+    if (mushafViewElForSizing) new ResizeObserver(sizeMushafPageTrack).observe(mushafViewElForSizing);
+} else {
+    sizeMushafPageTrack();
+}
+window.addEventListener('resize', sizeMushafPageTrack);
+window.addEventListener('orientationchange', () => setTimeout(sizeMushafPageTrack, 80));
+
 
 // ── تصفح حر لصفحات المصحف أثناء الاستماع ──
 async function renderMushafPageManual(pageNum) {
