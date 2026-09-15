@@ -352,7 +352,7 @@ let   mushafFollowAudio   = true;
 let   mushafNavUIBuilt    = false;   
 let   mushafUpdateToken   = 0;       
 
-let mushafPageRatio = 1.5; 
+let mushafPageRatio = 1.58; 
 function noteMushafPageRatio(svgText) {
     if (!svgText) return;
     let w, h;
@@ -368,6 +368,7 @@ function noteMushafPageRatio(svgText) {
         mushafPageRatio = ratio;
         const track = document.getElementById('mushaf-page-track');
         if (track) track.style.aspectRatio = `1 / ${mushafPageRatio}`;
+        if (typeof sizeMushafPageTrack === 'function') sizeMushafPageTrack();
     }
 }
 
@@ -824,12 +825,11 @@ function sizeMushafPageTrack() {
     const availW = view.clientWidth;
     const availH = view.clientHeight;
     if (!availW || !availH) return;
-    const PAGE_RATIO = 1.5; // نسبة ارتفاع صفحة المصحف إلى عرضها
     let w = availW;
-    let h = w * PAGE_RATIO;
+    let h = w * mushafPageRatio;
     if (h > availH) {
         h = availH;
-        w = h / PAGE_RATIO;
+        w = h / mushafPageRatio;
     }
     track.style.width = Math.floor(w) + 'px';
     track.style.height = Math.floor(h) + 'px';
